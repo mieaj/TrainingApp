@@ -4,18 +4,18 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.example.trainingapp.navigation.NavigationDirections
 import com.example.trainingapp.navigation.NavigationManager
-import com.example.trainingapp.navigation.screenGraph
+import com.example.trainingapp.navigation.screenNavigationGraph
+import com.example.trainingapp.ui.theme.MediumPadding
 import com.example.trainingapp.ui.theme.TrainingAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -32,7 +32,9 @@ class MainActivity : ComponentActivity() {
             TrainingAppTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(MediumPadding),
                     color = MaterialTheme.colorScheme.background
                 ) {
                     HandleNavigation(navigationManager = navigationManager)
@@ -48,26 +50,14 @@ fun HandleNavigation(navigationManager: NavigationManager) {
     NavHost(
         modifier = Modifier,
         navController = navController,
-        startDestination = NavigationDirections.profile.destination
+        startDestination = NavigationDirections.menuScreen.destination
     ) {
-        screenGraph()
+        screenNavigationGraph()
     }
 
     navigationManager.commands.collectAsState().value.also { command ->
         if (command.destination.isNotEmpty()) {
             navController.navigate(command.destination)
         }
-    }
-}
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    TrainingAppTheme {
-        Greeting("Android")
     }
 }
