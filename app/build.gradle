@@ -7,11 +7,11 @@ plugins {
 
 android {
     namespace 'com.example.trainingapp'
-    compileSdk 33
+    compileSdk 34
     defaultConfig {
         applicationId "com.example.trainingapp"
         minSdk 30
-        targetSdk 33
+        targetSdk 34
         versionCode 1
         versionName "1.0"
 
@@ -45,15 +45,15 @@ android {
 }
  dependencies {
 
-     implementation 'androidx.core:core-ktx:1.10.1'
-     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
-     implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1'
-     implementation 'androidx.activity:activity-compose:1.7.1'
+     implementation 'androidx.core:core-ktx:1.12.0'
+     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.2'
+     implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2'
+     implementation 'androidx.activity:activity-compose:1.8.0'
      implementation "androidx.compose.ui:ui:$compose_version"
      implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
-     implementation 'androidx.compose.material3:material3:1.2.0-alpha01'
+     implementation 'androidx.compose.material3:material3:1.2.0-alpha09'
      implementation 'com.google.accompanist:accompanist-systemuicontroller:0.27.0'
-     implementation "androidx.navigation:navigation-compose:2.5.3"
+     implementation "androidx.navigation:navigation-compose:2.7.4"
      implementation 'androidx.hilt:hilt-navigation-compose:1.0.0'
      implementation 'androidx.hilt:hilt-navigation-fragment:1.0.0'
      implementation "com.google.dagger:hilt-android:$hilt_version"

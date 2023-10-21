@@ -11,7 +11,7 @@ class MenuViewModel @Inject constructor(
     private val navigationManager: NavigationManager
 ): ViewModel(){
 
-    fun navigate(){
-        navigationManager.navigate(NavigationDirections.test)
+    fun navigate(muscleGroup: String){
+        navigationManager.navigate(NavigationDirections.exercise.navigationRoute(muscleGroup))
     }
 }
