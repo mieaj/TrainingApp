@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -16,7 +15,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.trainingapp.navigation.NavigationDirections
 import com.example.trainingapp.navigation.NavigationManager
 import com.example.trainingapp.navigation.screenNavigationGraph
-import com.example.trainingapp.ui.theme.MediumPadding
+import com.example.trainingapp.navigation.bottombar.BottomNavigation
 import com.example.trainingapp.ui.theme.TrainingAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -37,7 +36,13 @@ class MainActivity : ComponentActivity() {
                         .fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    HandleNavigation(navigationManager = navigationManager)
+                    Scaffold(
+                        bottomBar = {
+                            BottomNavigation(navigationManager = navigationManager)
+                        },
+                    ) {
+                        HandleNavigation(navigationManager = navigationManager)
+                    }
                 }
             }
         }
@@ -55,9 +60,16 @@ fun HandleNavigation(navigationManager: NavigationManager) {
         screenNavigationGraph()
     }
 
-    navigationManager.commands.collectAsState().value.also { command ->
-        if (command.isNotEmpty()) {
-            navController.navigate(command)
+    navigationManager.commands.collectAsState().value.also { (destination, popBackStack) ->
+
+        if (destination.isNotEmpty()) {
+            navController.navigate(destination){
+                if (popBackStack){
+                    popUpTo(navController.graph.id) {
+                    inclusive = true
+                    }
+                }
+            }
         }
     }
 }

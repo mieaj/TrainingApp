@@ -9,6 +9,7 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 private val DarkColorScheme = darkColorScheme(
     primary = Primary,
+    secondary = Primary.copy(alpha = 0.6f),
     background = DarkBackground,
     onBackground = DarkOnBackground,
     surface = DarkSurface,
@@ -22,6 +23,7 @@ private val DarkColorScheme = darkColorScheme(
 
 private val LightColorScheme = lightColorScheme(
     primary = Primary,
+    secondary = Primary.copy(alpha = 0.6f),
     background = LightBackground,
     onBackground = LightOnBackground,
     surface = LightSurface,

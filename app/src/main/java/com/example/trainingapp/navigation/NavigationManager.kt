@@ -4,12 +4,13 @@ import kotlinx.coroutines.flow.MutableStateFlow
 
 class NavigationManager {
 
-    var commands = MutableStateFlow("")
+    var commands = MutableStateFlow("" to false)
 
     fun navigate(
-        directions: String
+        directions: String,
+        popBackStack: Boolean = false
     ) {
-        commands.value = directions
+        commands.value = directions to popBackStack
     }
 
 }

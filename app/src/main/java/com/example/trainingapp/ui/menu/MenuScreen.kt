@@ -13,6 +13,7 @@ import com.example.trainingapp.ui.theme.components.BigButton
 
 @Composable
 fun MenuScreen(
+    modifier: Modifier = Modifier,
     viewModel: MenuViewModel = hiltViewModel()
 ){
 
