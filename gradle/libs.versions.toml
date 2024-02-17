@@ -3,6 +3,7 @@ accompanist-systemuicontroller = "0.27.0"
 activity-compose = "1.8.2"
 androidx-junit = "1.1.5"
 androidx-material3 = "1.2.0"
+animations-core = "1.9.60"
 core-ktx = "1.12.0"
 espresso-core = "3.5.1"
 hilt = "2.48"
@@ -29,6 +30,7 @@ androidx-material3 = { module = "androidx.compose.material3:material3-window-siz
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigation-compose" }
 androidx-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "compose" }
 androidx-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
+compose-destinations-animations = { module = "io.github.raamcosta.compose-destinations:animations-core", version.ref = "animations-core" }
 core-ktx = { module = "androidx.core:core-ktx", version.ref = "core-ktx" }
 espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espresso-core" }
 ext-junit = { module = "androidx.test.ext:junit", version.ref = "androidx-junit" }

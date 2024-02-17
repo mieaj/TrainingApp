@@ -60,6 +60,7 @@ dependencies {
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
     ksp(libs.compose.destinations.ksp)
+    implementation(libs.compose.destinations.animations)
     implementation(libs.compose.destinations)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)

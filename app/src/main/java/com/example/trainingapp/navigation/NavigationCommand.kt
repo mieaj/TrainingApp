@@ -1,9 +1,0 @@
-package com.example.trainingapp.navigation
-
-import androidx.navigation.NamedNavArgument
-
-interface NavigationCommand {
-    val arguments: List<NamedNavArgument>
-    val destination: String
-    fun navigationRoute(arg: String): String
-}

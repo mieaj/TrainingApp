@@ -3,71 +3,41 @@ package com.example.trainingapp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import com.example.trainingapp.navigation.NavigationDirections
-import com.example.trainingapp.navigation.NavigationManager
-import com.example.trainingapp.navigation.screenNavigationGraph
-import com.example.trainingapp.navigation.bottombar.BottomNavigation
+import com.example.trainingapp.ui.BottomNavigation
+import com.example.trainingapp.ui.NavGraphs
+import com.example.trainingapp.ui.destinations.MenuScreenDestination
 import com.example.trainingapp.ui.theme.TrainingAppTheme
+import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
+import com.ramcosta.composedestinations.DestinationsNavHost
+import com.ramcosta.composedestinations.animations.rememberAnimatedNavHostEngine
+import com.ramcosta.composedestinations.utils.currentDestinationAsState
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
-
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    @Inject
-    lateinit var navigationManager: NavigationManager
 
+    @OptIn(ExperimentalMaterialNavigationApi::class, ExperimentalAnimationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContent {
+        val navController = rememberNavController()
+            val currentDestination = navController.currentDestinationAsState().value ?: MenuScreenDestination
             TrainingAppTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier
-                        .fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                Scaffold(
+                    bottomBar = {
+                        BottomNavigation(navigator = navController, currentDestination = currentDestination)
+                    },
                 ) {
-                    Scaffold(
-                        bottomBar = {
-                            BottomNavigation(navigationManager = navigationManager)
-                        },
-                    ) {
-                        HandleNavigation(navigationManager = navigationManager)
-                    }
-                }
-            }
-        }
-    }
-}
-
-@Composable
-fun HandleNavigation(navigationManager: NavigationManager) {
-    val navController = rememberNavController()
-    NavHost(
-        modifier = Modifier,
-        navController = navController,
-        startDestination = NavigationDirections.menuScreen.destination
-    ) {
-        screenNavigationGraph()
-    }
-
-    navigationManager.commands.collectAsState().value.also { (destination, popBackStack) ->
-
-        if (destination.isNotEmpty()) {
-            navController.navigate(destination){
-                if (popBackStack){
-                    popUpTo(navController.graph.id) {
-                    inclusive = true
-                    }
+                    DestinationsNavHost(
+                        modifier = Modifier.padding(it),
+                        navController = navController,
+                        navGraph = NavGraphs.root,
+                        engine = rememberAnimatedNavHostEngine()
+                    )
                 }
             }
         }
