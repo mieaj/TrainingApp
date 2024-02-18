@@ -24,18 +24,22 @@ fun BottomNavigation(
             NavigationBarItem(
                 // Text that shows bellow the icon
                 label = {
-                    Text(text = item.title)
+                    Text(
+                        text = item.title,
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
                 },
                 icon = {
                     Icon(
                         painterResource(id = item.icon),
-                        contentDescription = item.title
+                        contentDescription = item.title,
+                        tint = MaterialTheme.colorScheme.onSurface
                     )
                 },
                 selected = currentDestination == item.destination,
                 alwaysShowLabel = true,
-                onClick ={
-                    navigator.navigate(item.destination){
+                onClick = {
+                    navigator.navigate(item.destination) {
                         popUpTo(navigator.graph.startDestinationId)
                         launchSingleTop = true
                     }
