@@ -16,8 +16,8 @@ internal enum class BottomNavItem(
         icon = R.drawable.ic_body,
         destination = BodyTrackerScreenDestination
     ),
-    Weight(
-        title = "Weight",
+    Training(
+        title = "Training",
         icon = R.drawable.ic_dumbbell,
         destination = MenuScreenDestination
     ),

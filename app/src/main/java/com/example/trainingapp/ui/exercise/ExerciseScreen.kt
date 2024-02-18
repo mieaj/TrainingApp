@@ -2,7 +2,9 @@ package com.example.trainingapp.ui.exercise
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import com.ramcosta.composedestinations.annotation.Destination
 
+@Destination
 @Composable
 fun ExerciseScreen(arg: String){
 
