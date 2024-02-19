@@ -83,38 +83,37 @@ fun BodyTrackerScreen() {
                         }
                     }
                 }
-                    item {
-                        Spacer(modifier = Modifier.height(MediumPadding))
-                        if (selectedItem== WEIGHT) {
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.spacedBy(SmallPadding),
+                item {
+                    Spacer(modifier = Modifier.height(MediumPadding))
+                    if (selectedItem == WEIGHT) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(SmallPadding),
+                        ) {
+                            var text by remember { mutableStateOf(TextFieldValue("")) }
+                            OutlinedTextField(
+                                modifier = Modifier.weight(1f),
+                                value = text,
+                                maxLines = 1,
+                                shape = Shapes.medium,
+                                onValueChange = {
+                                    text = it
+                                },
+                                label = { Text(text = "Update ${selectedItem}") },
+                                placeholder = { Text(text = "E.g: 10") },
+                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                            )
+                            Button(
+                                modifier = Modifier, onClick = { },
+                                shape = Shapes.medium
                             ) {
-                                var text by remember { mutableStateOf(TextFieldValue("")) }
-                                OutlinedTextField(
-                                    modifier = Modifier.weight(1f),
-                                    value = text,
-                                    maxLines = 1,
-                                    shape = Shapes.medium,
-                                    onValueChange = {
-                                        text = it
-                                    },
-                                    label = { Text(text = "Update ${selectedItem}") },
-                                    placeholder = { Text(text = "E.g: 10") },
-                                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
-                                )
-                                Button(
-                                    modifier = Modifier, onClick = { },
-                                    shape = Shapes.medium
-                                ) {
-                                    Text(maxLines = 1, text = "Update")
-                                }
+                                Text(maxLines = 1, text = "Update")
                             }
                         }
                     }
+                }
 
-//        InfiniteCircularList(items = (1..10).toMutableList(), initialItem = 4)
             })
         if (selectedItem == HEIGHT||selectedItem.isEmpty()) return
         Graph(
