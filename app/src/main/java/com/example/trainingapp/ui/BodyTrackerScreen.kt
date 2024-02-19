@@ -15,41 +15,58 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.trainingapp.R
+import com.example.trainingapp.ui.theme.LargePadding
 import com.example.trainingapp.ui.theme.MediumPadding
 import com.example.trainingapp.ui.theme.SmallPadding
 import com.example.trainingapp.ui.theme.components.Graph
 import com.example.trainingapp.ui.theme.components.OutlinedIconCard
 import com.ramcosta.composedestinations.annotation.Destination
 
+
+const val HEIGHT = "Height"
+const val WEIGHT = "Weight"
+const val BMI = "BMI"
+
+sealed class BodyTracker(val topic: String, val unit: String ="", val value: String, val icon: Int) {
+    data class Height(val height: String) : BodyTracker(topic = HEIGHT, unit = "cm", value = height, icon = R.drawable.drawing_height)
+    data class Weight(val weight: String) : BodyTracker(topic = WEIGHT, unit = "kg", value = weight, icon = R.drawable.weight)
+    data class Bmi(val bmi: String) : BodyTracker(topic = BMI, value = bmi, icon = R.drawable.drawing_bmi)
+}
+
 @Destination
 @Composable
 fun BodyTrackerScreen() {
     val items = listOf(
-        Triple("Height:", "22", R.drawable.drawing_height),
-        Triple("Weight:", "22", R.drawable.weight),
-        Triple("Bmi:", "22", R.drawable.drawing_bmi)
+        BodyTracker.Height("22"),
+        BodyTracker.Weight("22"),
+        BodyTracker.Bmi("22"),
     )
     var selectedItem by remember {
-        mutableStateOf("none")
+        mutableStateOf("")
     }
-    Column {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(MediumPadding),
+        verticalArrangement = Arrangement.spacedBy(LargePadding),
+    ) {
 
         LazyVerticalStaggeredGrid(
-            modifier = Modifier.padding(MediumPadding),
-            columns = StaggeredGridCells.Fixed(2),
+            modifier = Modifier,
+            columns = StaggeredGridCells.Fixed(1),
             verticalItemSpacing = SmallPadding,
             horizontalArrangement = Arrangement.spacedBy(SmallPadding),
             content = {
-                items.forEach { (topic, value, icon) ->
+                items.forEach {
                     item {
                         OutlinedIconCard(
                             modifier = Modifier,
-                            icon = icon,
-                            topic = topic,
-                            value = value,
-                            selected = topic == selectedItem
+                            icon = it.icon,
+                            topic = "${it.topic}:",
+                            value = it.value,
+                            selected = it.topic == selectedItem
                         ) {
-                            selectedItem = topic
+                            selectedItem = it.topic
                         }
                     }
                 }
@@ -57,8 +74,7 @@ fun BodyTrackerScreen() {
         Graph(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(300.dp)
-                .padding(MediumPadding)
+                .height(200.dp)
         )
     }
 }

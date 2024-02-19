@@ -15,8 +15,9 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.nativeCanvas
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.sp
-import com.example.trainingapp.ui.theme.LargePadding
+import com.example.trainingapp.ui.theme.MediumPadding
 import com.example.trainingapp.ui.theme.Shapes
 
 @Composable
@@ -29,14 +30,14 @@ fun Graph(
     val yValues = (points.min().toInt()-rangeArea..points.max().toInt()+rangeArea step rangeArea)
     val pointColor = MaterialTheme.colorScheme.primary
     val background = MaterialTheme.colorScheme.surface
-    val coordinateSystemColor = MaterialTheme.colorScheme.onBackground
+    val coordinateSystemColor = MaterialTheme.colorScheme.onSurface
     val numberLineColor = MaterialTheme.colorScheme.onSurface
-    val lineColor = MaterialTheme.colorScheme.onSurfaceVariant
+    val lineColor = MaterialTheme.colorScheme.onBackground
 
     Box(
         modifier = modifier
             .background(background, shape = Shapes.medium)
-            .padding(horizontal = LargePadding, vertical = LargePadding),
+            .padding(MediumPadding),
         contentAlignment = Alignment.Center
     ) {
         Canvas(
@@ -45,7 +46,7 @@ fun Graph(
         ) {
             val axisSpace = PointF(size.width / xValues.count(), size.height / yValues.count())
             val startPoint = PointF(0f, size.height)
-            val axisOffset = 40f
+            val axisOffset = 50f
             val numberOffset = 1f
 
             drawCoordinateSystem(
@@ -98,13 +99,13 @@ fun DrawScope.drawCoordinateSystem(color: Color, axisOffset: Float, startPointF:
     drawLine(
         color = color,
         start = Offset(startPointF.x + axisOffset, startPointF.y - axisOffset),
-        end = Offset(startPointF.x + axisOffset, -axisOffset),
+        end = Offset(startPointF.x + axisOffset, 0f),
         strokeWidth = lineSize
     )
     drawLine(
         color = color,
         start = Offset(startPointF.x + axisOffset, startPointF.y - axisOffset),
-        end = Offset(size.width + axisOffset, startPointF.y - axisOffset),
+        end = Offset(size.width, startPointF.y - axisOffset),
         strokeWidth = lineSize
     )
 }
@@ -118,14 +119,16 @@ fun DrawScope.drawCoordinateNumber(
     startPoint: PointF,
     axisSpace: PointF
 ) {
+    val centerNumber = 0.1f
     val textPaint = Paint().apply {
         textSize = 12.sp.toPx()
+        setColor(color.toArgb())
     }
     /** placing x axis points */
     xValues.forEachIndexed { i, value ->
         drawContext.canvas.nativeCanvas.drawText(
             "$value",
-            axisSpace.x * (i + numberOffset),
+            axisSpace.x * (i + numberOffset-centerNumber),
             startPoint.y,
             textPaint
         )
@@ -136,7 +139,7 @@ fun DrawScope.drawCoordinateNumber(
             drawContext.canvas.nativeCanvas.drawText(
                 "$value",
                 startPoint.x,
-                startPoint.y - axisSpace.y * (i + numberOffset),
+                (startPoint.y - axisSpace.y * (i + numberOffset -centerNumber)),
                 textPaint
             )
         }
@@ -147,7 +150,7 @@ fun DrawScope.drawCoordinateNumber(
                 startPoint.y - axisSpace.y * (i + numberOffset)
             ),
             end = Offset(
-                size.width + axisOffset,
+                size.width,
                 startPoint.y - axisSpace.y * (i + numberOffset)
             ),
             strokeWidth = 2f

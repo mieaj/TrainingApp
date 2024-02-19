@@ -27,6 +27,7 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.trainingapp.ui.theme.ExtraSmallPadding
+import com.example.trainingapp.ui.theme.MediumPadding
 import com.example.trainingapp.ui.theme.Shapes
 import com.example.trainingapp.ui.theme.SmallPadding
 
@@ -111,14 +112,14 @@ fun OutlinedIconCard(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(ExtraSmallPadding),
+                .padding(MediumPadding),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Row(
                 modifier = Modifier,
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(SmallPadding)
+                horizontalArrangement = Arrangement.spacedBy(ExtraSmallPadding)
             ) {
                 Icon(
                     modifier = Modifier.size(70.dp),
