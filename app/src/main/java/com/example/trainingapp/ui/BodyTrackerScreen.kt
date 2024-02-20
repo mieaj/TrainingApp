@@ -40,24 +40,23 @@ import kotlin.math.ceil
 @Destination
 @Composable
 fun BodyTrackerScreen() {
-    var height by remember { mutableStateOf(170) }
+    var height by remember { mutableStateOf<Int?>(null) }
     val weight = remember {
-        mutableStateListOf(
-            64f, 63.4f, 62f
+        mutableStateListOf<Float>(
+//            64f, 63.4f, 62f
         )
     }
     val bmi = remember {
-        mutableStateListOf(
-            20f, 20.4f, 22f
+        mutableStateListOf<Float>(
+//            20f, 20.4f, 22f
         )
     }
 
     val items = mutableStateListOf(
-        BodyTracker.Height(height.toString()),
-        BodyTracker.Weight(weight.last().toString()),
-        BodyTracker.Bmi(bmi.last().toString()),
+        BodyTracker.Height(height?.toString() ?: ""),
+        BodyTracker.Weight(weight.lastOrNull()?.toString() ?: ""),
+        BodyTracker.Bmi(bmi.lastOrNull()?.toString() ?: ""),
     )
-
 
     var selectedItem by remember {
         mutableStateOf("")
@@ -70,10 +69,13 @@ fun BodyTrackerScreen() {
     ) {
         var showDialog by remember { mutableStateOf(false) }
         HeightDialog(showDialog = showDialog,
-            currentValue = height,
+            currentValue = height ?: 150,
             onDismissRequest = { showDialog = false }) {
             showDialog = false
             height = it
+            weight.lastOrNull()?.let { weight ->
+                bmi.add(ceil(weight / (it / 50)))
+            }
         }
         Column(
             modifier = Modifier.fillMaxWidth(),
@@ -91,7 +93,9 @@ fun BodyTrackerScreen() {
                 WEIGHT -> {
                     UpdateWeight {
                         weight.add(it.toFloat())
-                        bmi.add(ceil(weight.last() / (height / 50)))
+                        height?.let { height ->
+                            bmi.add(ceil(weight.last() / (height / 50)))
+                        }
                     }
                 }
             }

@@ -25,10 +25,16 @@ fun Graph(
     modifier: Modifier = Modifier,
     points: List<Float> = listOf(10f, 30f, 25f, 15f, 20f)
 ) {
-    val rangeArea = if (points.max() - points.min() > 10) 5 else 1
+    val max = points.maxOrNull() ?: 10f
+    val min = points.minOrNull() ?: 10f
+    val rangeArea = if (max - min > 10) 5 else 1
     val xValues = ((1..10))
-    val yValues =
-        (points.min().toInt() - rangeArea..points.max().toInt() + rangeArea step rangeArea)
+    val yValues = if (max - min < 10) {
+        (min.toInt()-4..min.toInt()+5)
+    } else {
+        (min.toInt() - rangeArea..max.toInt() + rangeArea step rangeArea)
+    }
+
     val pointColor = MaterialTheme.colorScheme.primary
     val background = MaterialTheme.colorScheme.surface
     val coordinateSystemColor = MaterialTheme.colorScheme.onSurface
