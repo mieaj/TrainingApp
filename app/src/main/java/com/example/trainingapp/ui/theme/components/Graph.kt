@@ -27,7 +27,8 @@ fun Graph(
 ) {
     val rangeArea = if (points.max() - points.min() > 10) 5 else 1
     val xValues = ((1..10))
-    val yValues = (points.min().toInt()-rangeArea..points.max().toInt()+rangeArea step rangeArea)
+    val yValues =
+        (points.min().toInt() - rangeArea..points.max().toInt() + rangeArea step rangeArea)
     val pointColor = MaterialTheme.colorScheme.primary
     val background = MaterialTheme.colorScheme.surface
     val coordinateSystemColor = MaterialTheme.colorScheme.onSurface
@@ -96,16 +97,18 @@ fun Graph(
 
 fun DrawScope.drawCoordinateSystem(color: Color, axisOffset: Float, startPointF: PointF) {
     val lineSize = 6f
+//    Add axisOffset to y start value if is added
     drawLine(
         color = color,
-        start = Offset(startPointF.x + axisOffset, startPointF.y - axisOffset),
+        start = Offset(startPointF.x + axisOffset, startPointF.y),
         end = Offset(startPointF.x + axisOffset, 0f),
         strokeWidth = lineSize
     )
+//    Add axisOffset to y value if is added
     drawLine(
         color = color,
-        start = Offset(startPointF.x + axisOffset, startPointF.y - axisOffset),
-        end = Offset(size.width, startPointF.y - axisOffset),
+        start = Offset(startPointF.x + axisOffset, startPointF.y),
+        end = Offset(size.width, startPointF.y),
         strokeWidth = lineSize
     )
 }
@@ -124,22 +127,23 @@ fun DrawScope.drawCoordinateNumber(
         textSize = 12.sp.toPx()
         setColor(color.toArgb())
     }
-    /** placing x axis points */
-    xValues.forEachIndexed { i, value ->
-        drawContext.canvas.nativeCanvas.drawText(
-            "$value",
-            axisSpace.x * (i + numberOffset-centerNumber),
-            startPoint.y,
-            textPaint
-        )
-    }
+//    /** placing x axis points */
+//    xValues.forEachIndexed { i, value ->
+//        drawContext.canvas.nativeCanvas.drawText(
+//            "$value",
+//            axisSpace.x * (i + numberOffset-centerNumber),
+//            startPoint.y,
+//            textPaint
+//        )
+//    }
     /** placing y axis points */
+    fun modulus(index: Int) = if (yValues.count() > 10) index % 2 != 0 else true
     yValues.forEachIndexed { i, value ->
-        if (i % 2 != 0) {
+        if (modulus(i)) {
             drawContext.canvas.nativeCanvas.drawText(
                 "$value",
                 startPoint.x,
-                (startPoint.y - axisSpace.y * (i + numberOffset -centerNumber)),
+                (startPoint.y - axisSpace.y * (i + numberOffset - centerNumber)),
                 textPaint
             )
         }

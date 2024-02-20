@@ -1,4 +1,4 @@
-package com.example.trainingapp.ui
+package com.example.trainingapp.navigation
 
 import com.example.trainingapp.R
 import com.example.trainingapp.ui.destinations.BodyTrackerScreenDestination

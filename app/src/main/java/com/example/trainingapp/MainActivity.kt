@@ -8,10 +8,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
-import com.example.trainingapp.ui.BottomNavItem
-import com.example.trainingapp.ui.BottomNavigation
+import com.example.trainingapp.navigation.BottomNavItem
+import com.example.trainingapp.navigation.BottomNavigation
 import com.example.trainingapp.ui.NavGraphs
-import com.example.trainingapp.ui.destinations.MenuScreenDestination
 import com.example.trainingapp.ui.theme.TrainingAppTheme
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import com.ramcosta.composedestinations.DestinationsNavHost

@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -25,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.trainingapp.ui.theme.ExtraSmallPadding
 import com.example.trainingapp.ui.theme.MediumPadding
@@ -50,87 +52,3 @@ fun BigButton(modifier: Modifier = Modifier, text: String, onClick: () -> Unit) 
     }
 }
 
-@Composable
-fun IconCard(
-    modifier: Modifier = Modifier,
-    @DrawableRes icon: Int,
-    onClick: () -> Unit
-) {
-    val interactionSource = remember { MutableInteractionSource() }
-    val isPressed by interactionSource.collectIsPressedAsState()
-    val sizeScale by animateFloatAsState(if (isPressed) 0.98f else 1f, label = "")
-
-    Card(
-        modifier = modifier
-            .fillMaxWidth()
-            .scale(sizeScale),
-        onClick = onClick,
-        shape = Shapes.small,
-        interactionSource = interactionSource,
-        elevation = CardDefaults.elevatedCardElevation(pressedElevation = 0.dp)
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(SmallPadding), horizontalArrangement = Arrangement.Center
-        ) {
-            Icon(
-                modifier = Modifier.size(150.dp),
-                painter = painterResource(id = icon),
-                tint = MaterialTheme.colorScheme.onBackground,
-                contentDescription = ""
-            )
-        }
-    }
-}
-
-@Composable
-fun OutlinedIconCard(
-    modifier: Modifier = Modifier,
-    @DrawableRes icon: Int,
-    topic: String,
-    value: String,
-    selected: Boolean,
-    onClick: () -> Unit
-) {
-    val interactionSource = remember { MutableInteractionSource() }
-    val isPressed by interactionSource.collectIsPressedAsState()
-    val sizeScale by animateFloatAsState(if (isPressed) 0.98f else 1f, label = "")
-
-    OutlinedCard(
-        modifier = modifier
-            .fillMaxWidth()
-            .scale(sizeScale),
-        onClick = onClick,
-        shape = Shapes.small,
-        enabled = !selected,
-        colors = CardDefaults.outlinedCardColors(
-            containerColor = MaterialTheme.colorScheme.background,
-            disabledContainerColor = MaterialTheme.colorScheme.secondary
-        ),
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(MediumPadding),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Row(
-                modifier = Modifier,
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(ExtraSmallPadding)
-            ) {
-                Icon(
-                    modifier = Modifier.size(70.dp),
-                    painter = painterResource(id = icon),
-                    tint = MaterialTheme.colorScheme.onBackground,
-                    contentDescription = ""
-                )
-                Text(text = topic)
-            }
-            Text(text = value)
-
-        }
-    }
-}
