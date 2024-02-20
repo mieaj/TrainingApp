@@ -33,7 +33,7 @@ fun MenuScreen(
         "Leg" to R.drawable.leg_drawing,
         "Arms" to R.drawable.drawing_arm,
         "Back & Shoulders" to R.drawable.drawing_back,
-        "Core" to R.drawable.drawing_upper_body2,
+        "Core" to R.drawable.drawing_upper_body,
 
         )
     MenuScreen(

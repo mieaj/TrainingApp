@@ -1,6 +1,5 @@
 package com.example.trainingapp.models
 
-import androidx.compose.runtime.mutableStateListOf
 import com.example.trainingapp.R
 
 sealed class BodyTracker(
