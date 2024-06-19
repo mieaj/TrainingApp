@@ -1,6 +1,9 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.compose.compiler)
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
     alias(libs.plugins.ktlint)
@@ -34,15 +37,19 @@ android {
 
         }
     }
+    kotlin {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_17)
+        }
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
-                targetCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
+
     buildFeatures {
         compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.9"
     }
     packaging {
         resources {
@@ -63,13 +70,10 @@ dependencies {
     implementation(libs.hilt.navigation.compose)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.material3)
-    implementation(libs.androidx.hilt.navigation.fragment)
     implementation(libs.hilt.android)
-    implementation(libs.androidx.compose.material)
     ksp(libs.hilt.android.compiler)
     ksp(libs.compose.destinations.ksp)
     implementation(libs.compose.destinations.animations)
-    implementation(libs.compose.destinations)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
